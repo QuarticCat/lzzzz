@@ -36,7 +36,8 @@ mod compressor {
                     .sample_iter(Standard)
                     .take(64 * 1024)
                     .collect::<Vec<_>>();
-                let mut comp = lz4_hc::Compressor::with_dict(&dict, lz4_hc::CLEVEL_DEFAULT).unwrap();
+                let mut comp =
+                    lz4_hc::Compressor::with_dict(&dict, lz4_hc::CLEVEL_DEFAULT).unwrap();
                 let mut decomp = lz4::Decompressor::with_dict(&dict).unwrap();
                 comp.set_compression_level(level);
                 for src in src_set {
@@ -82,7 +83,7 @@ mod compressor {
 
         // Create working stream
         let mut comp = lz4_hc::Compressor::new().unwrap();
-        comp.set_compression_level(level);  // Set level before attachment
+        comp.set_compression_level(level); // Set level before attachment
 
         // Compress with attached dictionary
         comp.attach_dict(Some(&dict_comp), level);
@@ -95,7 +96,10 @@ mod compressor {
         comp.next_to_vec(data, &mut output_no_dict).unwrap();
 
         // Results should match
-        assert_ne!(output_attached_dict, output_no_dict, "Data with no dict should be different");
+        assert_ne!(
+            output_attached_dict, output_no_dict,
+            "Data with no dict should be different"
+        );
 
         // Code below is disabled because it (unexpectedly) does not work.
         // Seems to be an upstream lz4 issue.

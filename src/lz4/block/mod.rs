@@ -245,10 +245,7 @@ pub fn decompress_with_dict(src: &[u8], dst: &mut [u8], dict: &[u8]) -> Result<u
 ///
 /// lz4::decompress_partial_with_dict(&data[..], &mut buf[..], ORIGINAL_SIZE, DICT_DATA)?;
 ///
-/// assert_eq!(
-///     &buf[..],
-///     &b"The quick brown fox jump"[..]
-/// );
+/// assert_eq!(&buf[..], &b"The quick brown fox jump"[..]);
 /// # Ok::<(), std::io::Error>(())
 /// ```
 pub fn decompress_partial_with_dict(

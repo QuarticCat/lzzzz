@@ -57,10 +57,7 @@ pub fn compress_fast_ext_state_fast_reset(
     }
 }
 
-pub fn compress_dest_size(
-    src: &[u8],
-    dst: &mut [u8],
-) -> Result<(usize, usize)> {
+pub fn compress_dest_size(src: &[u8], dst: &mut [u8]) -> Result<(usize, usize)> {
     let mut src_size: c_int = src.len() as c_int;
     let result = unsafe {
         binding::LZ4_compress_destSize(

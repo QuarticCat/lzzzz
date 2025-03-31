@@ -9,8 +9,7 @@ use crate::{Error, ErrorKind, Result};
 use std::{
     mem::{size_of, MaybeUninit},
     os::raw::{c_char, c_int, c_void},
-    ptr::NonNull,
-    ptr::null_mut
+    ptr::{null_mut, NonNull},
 };
 
 #[allow(clippy::large_enum_variant)]
@@ -29,10 +28,8 @@ impl CompressionContext {
     pub fn new() -> Result<Self> {
         let mut stream = MaybeUninit::<LZ4Stream>::uninit();
         unsafe {
-            let ptr = binding::LZ4_initStream(
-                stream.as_mut_ptr() as *mut c_void,
-                size_of::<LZ4Stream>(),
-            );
+            let ptr =
+                binding::LZ4_initStream(stream.as_mut_ptr() as *mut c_void, size_of::<LZ4Stream>());
             if !ptr.is_null() {
                 return Ok(Self {
                     stream: Stream::Stack(stream.assume_init()),

@@ -5,8 +5,7 @@ use crate::{Error, ErrorKind, Result};
 
 use std::{
     os::raw::{c_char, c_int},
-    ptr::NonNull,
-    ptr::null_mut
+    ptr::{null_mut, NonNull},
 };
 
 pub struct CompressionContext {
@@ -93,7 +92,11 @@ impl CompressionContext {
         }
     }
 
-    pub fn attach_dict(&mut self, dict_stream: Option<&CompressionContext>, compression_level: i32) {
+    pub fn attach_dict(
+        &mut self,
+        dict_stream: Option<&CompressionContext>,
+        compression_level: i32,
+    ) {
         unsafe {
             if dict_stream.is_none() {
                 // Note(sewer56): When detaching dictionary, we need to reset the stream state
@@ -102,7 +105,9 @@ impl CompressionContext {
                 // since the HC API differs here.
                 binding::LZ4_resetStreamHC_fast(self.stream.as_ptr(), compression_level);
             }
-            let dict_ptr = dict_stream.map(|ctx| ctx.stream.as_ptr()).unwrap_or(null_mut());
+            let dict_ptr = dict_stream
+                .map(|ctx| ctx.stream.as_ptr())
+                .unwrap_or(null_mut());
             binding::LZ4_attach_HC_dictionary(self.stream.as_ptr(), dict_ptr);
         }
     }
