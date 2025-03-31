@@ -205,7 +205,6 @@ mod tests {
         BlockChecksum, BlockMode, BlockSize, ContentChecksum, FavorDecSpeed, Preferences,
         PreferencesBuilder, CLEVEL_DEFAULT, CLEVEL_HIGH, CLEVEL_MAX,
     };
-    use std::{i32, u32};
 
     #[test]
     fn preferences_builder() {

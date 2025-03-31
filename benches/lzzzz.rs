@@ -1,9 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use lzzzz::{lz4, lz4_hc, lz4f};
-use std::{
-    i32,
-    io::{Read, Write},
-};
+use std::io::{Read, Write};
 
 fn lz4_compress(level: i32, data: &[u8]) {
     let mut buf = [0u8; 4096];

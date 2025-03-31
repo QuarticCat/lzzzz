@@ -76,19 +76,19 @@ mod compressor {
         // Basic test data
         let data = b"The quick brown fox jumps over the lazy dog";
         let level = lz4_hc::CLEVEL_DEFAULT;
-    
+
         // Create dictionary stream and set its compression level
-        let mut dict_comp = lz4_hc::Compressor::with_dict(data, level).unwrap();
-        
-        // Create working stream 
+        let dict_comp = lz4_hc::Compressor::with_dict(data, level).unwrap();
+
+        // Create working stream
         let mut comp = lz4_hc::Compressor::new().unwrap();
         comp.set_compression_level(level);  // Set level before attachment
-    
+
         // Compress with attached dictionary
-        comp.attach_dict(Some(&mut dict_comp), level);
+        comp.attach_dict(Some(&dict_comp), level);
         let mut output_attached_dict = Vec::new();
         comp.next_to_vec(data, &mut output_attached_dict).unwrap();
-    
+
         // Compress with no dictionary
         comp.attach_dict(None, level);
         let mut output_no_dict = Vec::new();

@@ -4,7 +4,6 @@ use bytes::Bytes;
 use lazy_static::lazy_static;
 use lzzzz::{lz4, lz4_hc, lz4f::*};
 use rand::{distributions::Standard, rngs::SmallRng, Rng, SeedableRng};
-use std::{i32, u32};
 
 lazy_static! {
     static ref DATA_SET: Vec<Bytes> = {
